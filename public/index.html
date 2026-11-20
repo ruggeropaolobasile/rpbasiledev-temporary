@@ -3,28 +3,234 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a111b">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#101827">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
-  <title>rpbasiledev.com — Sito temporaneamente non disponibile</title>
+  <meta name="description" content="Ruggero Paolo Basile: sviluppo software, integrazione di sistemi, automazione industriale e applicazioni AI. Soluzioni pragmatiche dal prototipo alla produzione.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ruggero Paolo Basile | Software & Systems">
+  <meta property="og:description" content="Software engineering, integrazione di sistemi e automazioni intelligenti.">
+  <title>Ruggero Paolo Basile — Software Engineer & Systems Integration</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <style>
-    :root { color-scheme: dark; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 2rem; color: #edf2fb; background: radial-gradient(circle at 15% 10%, #20324b 0, transparent 38%), #101827; }
-    main { width: min(620px, 100%); padding: clamp(2rem, 5vw, 3.5rem); border: 1px solid #334155; border-radius: 22px; background: #152235; box-shadow: 0 18px 55px #03071265; }
-    .eyebrow { color: #8ab4f8; font-size: .84rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-    h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.15; letter-spacing: -.04em; margin: 1rem 0 1.25rem; }
-    p { line-height: 1.7; color: #cbd5e1; margin-bottom: 1.5rem; }
-    .footer { color: #93a4bd; font-size: .85rem; margin-top: 2.2rem; border-top: 1px solid #334155; padding-top: 1.2rem; }
+    :root{--ink:#101e2a;--navy:#0a111b;--cream:#f6f5f0;--paper:#fffefa;--teal:#c5ff6b;--line:#d7ddd9;--muted:#52636c;--card:#172330}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:86px}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}
+    :focus-visible{outline:3px solid #59c4a3;outline-offset:4px}
+    .skip{position:absolute;top:-70px;left:16px;background:var(--teal);padding:12px;z-index:100}.skip:focus{top:10px}
+    .container{width:min(1180px,calc(100% - 48px));margin-inline:auto}
+    .topbar{position:sticky;top:0;z-index:30;background:rgba(10,17,27,.95);border-bottom:1px solid #30404d;backdrop-filter:blur(14px)}
+    .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{font-weight:800;color:#fff;letter-spacing:-.045em;font-size:1.25rem;white-space:nowrap}.brand b{color:var(--teal)}.brand small{display:block;color:#9aaab8;font-weight:500;font-size:.66rem;letter-spacing:.14em;margin-top:4px;text-transform:uppercase}
+    .links{display:flex;align-items:center;gap:30px;font-size:.88rem;font-weight:600;color:#c5d0d8}.links a:hover{color:var(--teal)}
+    .nav-cta{border:1px solid #80938b;border-radius:100px;padding:11px 18px;color:white;white-space:nowrap;font-size:.86rem;font-weight:700}.nav-cta:hover{background:var(--teal);color:var(--navy)}
+    .menu-toggle{display:none;background:transparent;border:1px solid #556773;color:white;padding:9px 12px;border-radius:10px}
+    .hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+    .hero::before{content:"";position:absolute;inset:0;opacity:.3;background-image:linear-gradient(#24313b 1px,transparent 1px),linear-gradient(90deg,#24313b 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(90deg,transparent 35%,black)}
+    .hero-grid{min-height:590px;padding-block:110px 108px;display:grid;grid-template-columns:1.14fr .86fr;gap:66px;align-items:center;position:relative}
+    .eyebrow{color:#688073;text-transform:uppercase;letter-spacing:.17em;font-size:.73rem;font-weight:800;display:flex;align-items:center;gap:11px}.eyebrow::before{content:"";width:24px;height:2px;background:currentColor}
+    .hero .eyebrow{color:var(--teal)}
+    h1,h2,h3,p{margin-top:0}
+    h1{letter-spacing:-.075em;font-size:clamp(3.4rem,7vw,6.5rem);line-height:1.02;margin:29px 0}
+    h1 .accent{color:var(--teal)}
+    .lead{color:#b7c4cb;line-height:1.8;font-size:1.09rem;max-width:590px;margin-bottom:34px}
+    .actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--teal);color:var(--navy);padding:15px 23px;border:1px solid var(--teal);border-radius:8px;font-size:.89rem;font-weight:800;transition:transform .2s}.button:hover{transform:translateY(-2px)}.button.secondary{background:transparent;color:#fff;border-color:#70818c}
+    .hero-meta{display:flex;gap:15px;align-items:center;color:#9fb0b8;margin-top:45px;font-size:.78rem;letter-spacing:.05em}.hero-meta .dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+    .visual{position:relative;min-height:350px;display:grid;place-items:center}
+    .mesh{position:absolute;inset:0;border:1px solid #38505c;background:linear-gradient(145deg,#1b2d3e,transparent);clip-path:polygon(7% 0%,100% 10%,94% 100%,0% 88%);transform:rotate(-3deg)}
+    .visual-card{position:relative;background:#142231ee;border:1px solid #3c5262;border-radius:17px;padding:27px;box-shadow:0 32px 100px #0008;width:min(380px,100%);transform:rotate(3deg)}
+    .visual-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #405160;padding-bottom:18px;margin-bottom:18px;font:700 .75rem/1.4 monospace;color:#a9c2c5}
+    .status{display:flex;align-items:center;gap:7px;color:var(--teal)}.status::before{content:"";width:6px;height:6px;background:var(--teal);border-radius:50%}
+    .code-lines{font:500 .91rem/2 monospace;color:#d0e0ea}.code-lines .key{color:#b1e37f}.code-lines .value{color:#91caea}.code-lines .comment{color:#8297a5}
+    .signal{display:flex;align-items:flex-end;gap:5px;margin-top:24px;height:42px}.signal span{width:11%;border-radius:2px 2px 0 0;background:linear-gradient(var(--teal),#327d77)}
+    .statline{background:#182532;color:#d9e3e8;border-bottom:1px solid #354450}
+    .statline-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:24px 0}
+    .statline strong{display:block;color:#fff;font-size:.94rem}.statline span{display:block;color:#91a2ae;font-size:.77rem;margin-top:5px}
+    section.content-section{padding:105px 0}
+    .section-head{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:35px;margin-bottom:44px}
+    .section-head h2{font-size:clamp(2.2rem,4vw,3.9rem);line-height:1.1;letter-spacing:-.062em;margin:18px 0 0}
+    .section-head p{margin:0;color:var(--muted);font-size:1.02rem;line-height:1.8;max-width:470px}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .service{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:35px;min-height:270px}
+    .service .num{font:700 .78rem monospace;color:#5b8474;display:block;margin-bottom:41px}.service h3{font-size:1.4rem;letter-spacing:-.036em;margin-bottom:15px}.service p{color:var(--muted);line-height:1.72;font-size:.94rem;margin-bottom:0}
+    .section-dark{background:#0f1a25;color:#f1f5f7;padding:103px 0}
+    .section-dark .section-head p{color:#aab9c2}.section-dark .eyebrow{color:var(--teal)}
+    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .project{background:#1a2a38;border:1px solid #405363;border-radius:13px;padding:28px;min-height:290px;display:flex;flex-direction:column;justify-content:space-between}
+    .project-top{display:flex;justify-content:space-between;align-items:center;color:var(--teal);font:.75rem monospace;letter-spacing:.04em}.project h3{font-size:1.42rem;line-height:1.22;letter-spacing:-.04em;margin:20px 0 13px}.project p{color:#afc0c9;font-size:.9rem;line-height:1.7;margin:0}.project-bottom{margin-top:25px;border-top:1px solid #405363;padding-top:17px;color:#a7b8bf;font-size:.76rem}
+    .about-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:110px}
+    .about-layout h2{font-size:clamp(2.4rem,4.2vw,4rem);letter-spacing:-.065em;line-height:1.12;margin:19px 0 26px}
+    .about-layout p{color:var(--muted);line-height:1.85}
+    .tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+    .tags span{display:inline-block;background:#e7ebe5;color:#283f45;padding:9px 13px;border:1px solid #d2dad1;border-radius:6px;font-size:.81rem;font-weight:700}
+    .timeline{border-left:1px solid #a6b9ad;padding-left:30px;margin:0;list-style:none}
+    .timeline li{position:relative;padding:0 0 32px}.timeline li:last-child{padding-bottom:0}
+    .timeline li::before{content:"";position:absolute;left:-36px;top:4px;width:11px;height:11px;border:3px solid var(--cream);border-radius:100%;background:#338871}
+    .timeline time{font:.77rem monospace;color:#448270;font-weight:700}.timeline h3{margin:9px 0;font-size:1.15rem;letter-spacing:-.025em}.timeline p{font-size:.94rem;margin:0}
+    .contact{background:#dce8d8;padding:105px 0}
+    .contact-layout{display:grid;grid-template-columns:.92fr 1.08fr;gap:90px}
+    .contact h2{font-size:clamp(2.6rem,4.5vw,4.4rem);letter-spacing:-.072em;line-height:1.05;margin:22px 0}
+    .contact .intro{color:#38554b;line-height:1.75;font-size:1rem;max-width:390px}
+    .contact-info{margin-top:30px;border-top:1px solid #b0c6b8;padding-top:24px;display:grid;gap:14px}
+    .contact-info a{font-weight:750;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+    .contact-info small{display:block;color:#577168;font-size:.76rem;margin-bottom:4px}
+    .form-panel{padding:35px;border-radius:14px;background:#fffefa;border:1px solid #b8cbb8;box-shadow:0 18px 40px #56725f1c}
+    .form-panel h3{font-size:1.45rem;letter-spacing:-.045em;margin:0 0 26px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{margin-bottom:20px}.field label{display:block;font-size:.8rem;font-weight:750;color:#33484a;margin-bottom:9px}
+    .field input,.field select,.field textarea{width:100%;background:#fff;border:1px solid #b8c5be;border-radius:7px;padding:13px 15px;font-size:.94rem;color:#18303c;transition:border-color .15s}.field input:focus,.field select:focus,.field textarea:focus{border-color:#26775e;outline:2px solid #6eaf9255}
+    .field textarea{min-height:140px;resize:vertical}.checkbox-row{display:flex;gap:10px;align-items:flex-start;font-size:.81rem;line-height:1.65;color:#47605d;margin:0 0 22px}.checkbox-row input{margin-top:4px;width:18px;height:18px;accent-color:#224f3d}
+    .checkbox-row a,.fineprint a{text-decoration:underline;text-underline-offset:3px}.send{width:100%;border-radius:8px;cursor:pointer}.fineprint{font-size:.73rem;line-height:1.6;color:#5a6b66;margin:15px 0 0}
+    .honeypot{position:absolute!important;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
+    footer{background:#0a111b;color:#fff;padding:33px 0}.footer-inner{display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:.8rem;color:#9eafbb}.footer-inner a{color:#e3ecf0;text-decoration:underline;text-underline-offset:3px}
+    @media(max-width:950px){.hero-grid{grid-template-columns:1fr;gap:38px;padding-block:75px 65px}.visual{min-height:260px;max-width:520px}.visual-card{transform:none}.mesh{transform:none}.about-layout,.contact-layout{gap:50px}.projects{grid-template-columns:1fr 1fr}.projects .project:last-child{grid-column:span 2;min-height:210px}.hero h1{max-width:820px}}
+    @media(max-width:680px){.container{width:min(100% - 32px,560px)}.nav{height:67px}.brand{font-size:1.08rem}.brand small{font-size:.58rem}.menu-toggle{display:block}.links{display:none;position:absolute;top:67px;left:0;right:0;background:#101d29;flex-direction:column;align-items:stretch;padding:20px 24px;gap:0;box-shadow:0 20px 30px #0006}.links.open{display:flex}.links a{padding:12px;border-bottom:1px solid #33434f}.nav-cta{display:none}.hero-grid{min-height:0}.hero h1{font-size:clamp(2.9rem,12vw,4.8rem)}.visual{display:none}.lead{font-size:1rem}.statline-inner{grid-template-columns:1fr;gap:16px}.statline-inner>div{border-bottom:1px solid #34424d;padding-bottom:14px}.statline-inner>div:last-child{border-bottom:0;padding-bottom:0}section.content-section,.section-dark,.contact{padding:70px 0}.section-head,.about-layout,.contact-layout{grid-template-columns:1fr;gap:28px}.cards,.projects{grid-template-columns:1fr}.projects .project:last-child{grid-column:auto;min-height:290px}.service{min-height:0;padding:28px}.service .num{margin-bottom:26px}.two-col{grid-template-columns:1fr;gap:0}.form-panel{padding:24px}.footer-inner{flex-direction:column;align-items:flex-start}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Ruggero Paolo Basile","url":"https://www.rpbasiledev.com","jobTitle":"Software Developer","description":"Sviluppo software, integrazione sistemi e automazione industriale","sameAs":["https://github.com/ruggeropaolobasile","https://www.linkedin.com/in/ruggero-paolo-basile-44b31448/"]}
+  </script>
 </head>
 <body>
-  <main>
-    <div class="eyebrow">rpbasiledev.com</div>
-    <h1>Sito temporaneamente non disponibile</h1>
-    <p>Stiamo effettuando un intervento tecnico di ripristino e sicurezza. Il sito tornerà disponibile non appena saranno completate le verifiche necessarie.</p>
-    <p>Ci scusiamo per il disagio.</p>
-    <div class="footer">Pagina temporanea informativa · Nessun accesso o dato personale richiesto</div>
+  <a href="#main" class="skip">Vai al contenuto</a>
+  <header class="topbar">
+    <nav class="container nav" aria-label="Navigazione principale">
+      <a href="#inizio" class="brand" aria-label="Ruggero Paolo Basile, torna all'inizio">RUGGERO<span aria-hidden="true"><b> / </b></span>BASILE<small>Software &amp; systems</small></a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation">Menu ☰</button>
+      <div class="links" id="navigation">
+        <a href="#competenze">Competenze</a>
+        <a href="#progetti">Progetti</a>
+        <a href="#profilo">Profilo</a>
+        <a href="#contatti">Contatti</a>
+      </div>
+      <a class="nav-cta" href="#contatti">Parliamo del tuo progetto ↗</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero" id="inizio" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Ruggero Paolo Basile · Lecce, Italia</div>
+          <h1 id="hero-title">Il software è utile quando <span class="accent">fa funzionare le cose.</span></h1>
+          <p class="lead">Progetto e sviluppo soluzioni digitali, collego sistemi eterogenei e trasformo idee tecniche in strumenti concreti. Dall'automazione industriale al backend enterprise, fino ai workflow con intelligenza artificiale.</p>
+          <div class="actions">
+            <a class="button" href="#contatti">Raccontami la tua esigenza <span aria-hidden="true">↗</span></a>
+            <a class="button secondary" href="#progetti">Esplora il mio lavoro <span aria-hidden="true">↘</span></a>
+          </div>
+          <div class="hero-meta"><span class="dot" aria-hidden="true"></span> Sviluppo software · Integrazione · Ricerca applicata</div>
+        </div>
+        <div class="visual" aria-hidden="true">
+          <div class="mesh"></div>
+          <div class="visual-card">
+            <div class="visual-header"><span>systems / integration</span><span class="status">ONLINE</span></div>
+            <div class="code-lines">
+              <div><span class="comment">// un problema reale</span></div>
+              <div><span class="key">input</span>: <span class="value">"complessità"</span>,</div>
+              <div><span class="key">metodo</span>: <span class="value">"ingegneria"</span>,</div>
+              <div><span class="key">output</span>: <span class="value">"soluzione"</span>;</div>
+              <div>&nbsp;</div>
+              <div><span class="comment">// software che produce valore</span></div>
+            </div>
+            <div class="signal"><span style="height:30%"></span><span style="height:55%"></span><span style="height:42%"></span><span style="height:84%"></span><span style="height:65%"></span><span style="height:95%"></span><span style="height:75%"></span><span style="height:100%"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="statline"><div class="container statline-inner">
+      <div><strong>Software engineering</strong><span>.NET · C# · Java · Python · SQL</span></div>
+      <div><strong>Sistemi e processi</strong><span>API · ERP · HMI/SCADA · IT/OT</span></div>
+      <div><strong>AI applicata</strong><span>Agenti · Integrazioni · Automazione</span></div>
+    </div></div>
+    <section class="content-section" id="competenze">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="eyebrow">Cosa posso fare</div><h2>Tecnologia solida.<br>Risultati concreti.</h2></div>
+          <p>Un approccio trasversale che unisce esperienza sul campo, progettazione software e capacità di integrazione. Ogni soluzione parte dal problema, non dallo stack.</p>
+        </div>
+        <div class="cards">
+          <article class="service"><span class="num">01 / ENGINEERING</span><h3>Applicazioni e backend</h3><p>Sviluppo di servizi, API REST/SOAP, applicazioni web e componenti enterprise. Esperienza con C#/.NET, Java, Python, SQL e piattaforme gestionali.</p></article>
+          <article class="service"><span class="num">02 / INTEGRATION</span><h3>Integrazione di sistemi</h3><p>Connessione tra software, dati, processi aziendali e strumenti già esistenti. L'obiettivo è ridurre attività manuali, discontinuità e costi operativi.</p></article>
+          <article class="service"><span class="num">03 / INDUSTRIAL</span><h3>Automazione e IT/OT</h3><p>Esperienza nella progettazione e messa in servizio di interfacce HMI/SCADA e sistemi di supervisione industriale, con attenzione al contesto operativo reale.</p></article>
+          <article class="service"><span class="num">04 / RESEARCH</span><h3>Automazioni AI e sicurezza</h3><p>Studio e prototipazione di workflow con agenti AI, connettori e strumenti di governance. Approccio alla sicurezza basato su autorizzazione, verifica e tracciabilità.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section-dark" id="progetti">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="eyebrow">Esperienze selezionate</div><h2>Dal campo<br>al codice.</h2></div>
+          <p>Ambiti di lavoro ed esperienze documentate; le iniziative di ricerca e sviluppo sono presentate come tali, senza attribuire loro risultati commerciali non verificati.</p>
+        </div>
+        <div class="projects">
+          <article class="project"><div><div class="project-top"><span>01 / INDUSTRIA</span><span aria-hidden="true">↗</span></div><h3>Supervisione industriale HMI/SCADA</h3><p>Progettazione di interfacce e supporto alla messa in servizio per sistemi di supervisione in ambiente industriale.</p></div><div class="project-bottom">Automazione · Interfacce operatore · Sistemi industriali</div></article>
+          <article class="project"><div><div class="project-top"><span>02 / ENTERPRISE</span><span aria-hidden="true">↗</span></div><h3>Applicazioni e integrazioni aziendali</h3><p>Sviluppo backend e full stack, integrazione API, database e personalizzazioni su piattaforme enterprise e gestionali.</p></div><div class="project-bottom">.NET · Java / Spring · SQL · Business Central</div></article>
+          <article class="project"><div><div class="project-top"><span>03 / R&amp;D</span><span aria-hidden="true">↗</span></div><h3>Governance di agenti e workflow AI</h3><p>Ricerca applicata su orchestrazione, affidabilità dei runner, integrazione di tool e controllo delle automazioni tramite il progetto GRP.</p></div><div class="project-bottom">AI orchestration · MCP · Workflow engineering</div></article>
+        </div>
+      </div>
+    </section>
+    <section class="content-section" id="profilo">
+      <div class="container about-layout">
+        <div>
+          <div class="eyebrow">Chi sono</div>
+          <h2>Un profilo tecnico, una visione d'insieme.</h2>
+          <p>Sono Ruggero Paolo Basile, sviluppatore software con un percorso che attraversa l'automazione degli impianti, le applicazioni aziendali e le nuove forme di integrazione con l'intelligenza artificiale.</p>
+          <p>Mi interessa costruire soluzioni verificabili, manutenibili e utili: sistemi che eliminano lavoro ripetitivo, rendono accessibili i dati e aiutano persone e imprese a lavorare meglio.</p>
+          <div class="tags"><span>C# / .NET</span><span>Java / Spring</span><span>Python</span><span>REST / SOAP</span><span>SQL</span><span>React</span><span>HMI / SCADA</span><span>Business Central</span><span>AI / MCP</span></div>
+        </div>
+        <div>
+          <ol class="timeline">
+            <li><time datetime="2008">2008 — 2011</time><h3>Automazione industriale</h3><p>Progettazione e messa in servizio di supervisione HMI/SCADA in impianti industriali.</p></li>
+            <li><time datetime="2020">2020 — 2023</time><h3>Sviluppo e sicurezza applicativa</h3><p>Esperienze su SharePoint/.NET, Python, Java Spring Boot, API e analisi tecnica in ambiti enterprise.</p></li>
+            <li><time datetime="2023">2023 — 2025</time><h3>Backend e piattaforme enterprise</h3><p>Sviluppo C#/.NET, Entity Framework, React e integrazione di componenti applicativi.</p></li>
+            <li><time datetime="2026">2026 — oggi</time><h3>Gestionali e automazione AI</h3><p>Integrazioni Business Central e sperimentazione di workflow, connettori e orchestrazione di agenti AI.</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    <section class="contact" id="contatti">
+      <div class="container contact-layout">
+        <div>
+          <div class="eyebrow">Entriamo in contatto</div>
+          <h2>Hai una sfida tecnica? <br>Parliamone.</h2>
+          <p class="intro">Per consulenze, collaborazioni, integrazioni software o progetti di automazione. Descrivi il contesto e la necessità: possiamo individuare insieme un primo passo concreto.</p>
+          <div class="contact-info">
+            <div><small>Email</small><a href="mailto:ruggeropaolobasile@gmail.com">ruggeropaolobasile@gmail.com</a></div>
+            <div><small>Profili professionali</small><a href="https://www.linkedin.com/in/ruggero-paolo-basile-44b31448/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a> &nbsp; · &nbsp; <a href="https://github.com/ruggeropaolobasile" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+            <div><small>Base operativa</small>Lecce, Italia · Collaborazioni anche da remoto</div>
+          </div>
+        </div>
+        <div class="form-panel">
+          <h3>Raccontami il tuo progetto</h3>
+          <form action="https://formsubmit.co/ruggeropaolobasile@gmail.com" method="POST" accept-charset="UTF-8">
+            <input type="hidden" name="_subject" value="Nuova richiesta dal portfolio rpbasiledev.com">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="true">
+            <input type="hidden" name="_next" value="https://rpbasiledev-temporary.onrender.com/thanks.html">
+            <div class="honeypot" aria-hidden="true"><label for="fax">Non compilare</label><input id="fax" name="_honey" type="text" tabindex="-1" autocomplete="off"></div>
+            <div class="two-col">
+              <div class="field"><label for="name">Nome e cognome *</label><input id="name" name="name" type="text" autocomplete="name" minlength="2" maxlength="120" placeholder="Il tuo nome" required></div>
+              <div class="field"><label for="email">Email *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="180" placeholder="nome@azienda.it" required></div>
+            </div>
+            <div class="field"><label for="subject">Di cosa vuoi parlare?</label><select name="topic" id="subject"><option value="Software e integrazioni">Software e integrazioni</option><option value="Automazione industriale">Automazione industriale</option><option value="Intelligenza artificiale">Intelligenza artificiale</option><option value="Collaborazione professionale">Collaborazione professionale</option><option value="Altro">Altro</option></select></div>
+            <div class="field"><label for="message">Messaggio *</label><textarea id="message" name="message" minlength="15" maxlength="5000" placeholder="Contesto, obiettivo e tipo di supporto richiesto..." required></textarea></div>
+            <label class="checkbox-row"><input name="privacy_acknowledged" value="yes" type="checkbox" required><span>Ho letto l'<a href="/privacy.html" target="_blank" rel="noopener">informativa sulla privacy</a> e comprendo che i dati inviati saranno utilizzati per rispondere alla richiesta e inoltrati tramite un fornitore esterno di gestione moduli. *</span></label>
+            <button class="button send" type="submit">Invia richiesta <span aria-hidden="true">↗</span></button>
+            <p class="fineprint">Il messaggio viene inoltrato tramite FormSubmit. Il servizio può richiedere una verifica antispam. In alternativa puoi <a href="mailto:ruggeropaolobasile@gmail.com?subject=Contatto%20da%20rpbasiledev.com">scrivermi direttamente via email</a>.</p>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
+  <footer><div class="container footer-inner"><span>© <span id="year">2026</span> Ruggero Paolo Basile. Progettato per essere essenziale.</span><span><a href="/privacy.html">Privacy</a> &nbsp; · &nbsp; <a href="#inizio">Torna su ↑</a></span></div></footer>
+  <script>
+  (function(){
+    var toggle=document.getElementById('menu-toggle'),links=document.getElementById('navigation');
+    toggle.addEventListener('click',function(){var open=links.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));});
+    links.addEventListener('click',function(event){if(event.target.tagName==='A'){links.classList.remove('open');toggle.setAttribute('aria-expanded','false');}});
+    document.getElementById('year').textContent=String(new Date().getFullYear());
+  })();
+  </script>
 </body>
 </html>
