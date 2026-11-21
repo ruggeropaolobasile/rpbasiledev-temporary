@@ -1,42 +1,63 @@
-# rpbasiledev.com — Cutover e bonifica (20 novembre 2026)
+# rpbasiledev.com — Cutover e bonifica
 
-## Stato verificato
+**Ultimo aggiornamento verificato: 21 novembre 2026.**
 
-- Nuovo portfolio statico: `https://rpbasiledev-temporary.onrender.com/` — Render, deployment Live.
-- Repository sorgente: `ruggeropaolobasile/rpbasiledev-temporary`.
-- Modulo contatti: FormSubmit, attivazione completata e test email ricevuto sulla Gmail personale il 20 novembre 2026.
-- Dominio `rpbasiledev.com`: registrazione Active nel pannello THCServers; hosting Geek Web Hosting Suspended.
-- Nessun file, database, script o backup del servizio THCServers è stato trasferito nel nuovo sito.
-- Nessun cambio DNS è stato ancora effettuato.
+## Stato
 
-## Inventario DNS pubblico alla verifica del 20/11/2026
+| Componente | Esito |
+|---|---|
+| `https://www.rpbasiledev.com` | **LIVE**, portfolio nuovo su Render, HTTPS certificato |
+| `https://rpbasiledev-temporary.onrender.com` | LIVE, origin statico di fallback |
+| Modulo contatti | FormSubmit attivato e testato su indirizzo Render; return URL aggiornato a WWW |
+| `/robots.txt` e `/sitemap.xml` su WWW | **LIVE, verificati in browser** |
+| Canonical + meta robots | WWW canonical, index/follow |
+| `rpbasiledev.com` (senza www) | Ancora A vecchio `131.226.5.6`; Render attende verifica |
+| Mail del dominio | Ancora MX `0 rpbasiledev.com`, legato ad A @ legacy |
+| Registrazione presso THCServers | ACTIVE; hosting Geek Web Hosting sospeso |
+| Old WordPress files | **NON migrati**; nessun file sospetto inserito nel nuovo sito |
 
-- A `@` -> `131.226.5.6`
-- CNAME `www` -> `rpbasiledev.com`
-- MX `@` -> `0 rpbasiledev.com`
-- TXT SPF `v=spf1 +a +mx +ip4:131.226.5.3 include:cpanel2-us.thcservers.com ~all`
+## DNS pubblico verificato il 21/11/2026
+
 - NS: `ns1.thcservers.com` ... `ns4.thcservers.com`
+- A `@` -> `131.226.5.6`
+- CNAME `www` -> `rpbasiledev-temporary.onrender.com` (ticket registrar #227944)
+- MX `@` -> `0 rpbasiledev.com`
+- CNAME `mail` -> `rpbasiledev.com`
+- TXT SPF `v=spf1 +a +mx +ip4:131.226.5.3 include:cpanel2-us.thcservers.com ~all`
+- TXT `_dmarc`: `v=DMARC1; p=none;`
+- TXT `default._domainkey`: chiave pubblica DKIM sul vecchio provider (valore verificato, omesso da questo riepilogo)
+- TXT `@`: `MS=E7EDB373F9FA9E2FC5A32E39A88AE2EA4F3C5381`
+- Altri sottodomini usati dal vecchio provider: `cpanel`, `webmail`, `webdisk`, `ftp`, `autoconfig`, `autodiscover` e record SRV di autodiscover.
 
-**Attenzione:** l'host MX coincide con il dominio principale. Cambiare A di `@` mentre MX punta a `@` rischia di rompere la ricezione della posta. Non trasferire i nameserver senza un inventario completo DNS di mail, TXT, DKIM, DMARC e altri sottodomini.
+## Richiesta al registrar in corso
 
-## Cutover sicuro
+Il 21 novembre 2026 è stato aggiornato il ticket **THCServers #227944** con richiesta di cutover **in due fasi**:
 
-1. Collegare `www.rpbasiledev.com` come custom domain al servizio statico Render `srv-dc0b32g8v5cc7394tptg`. Attendere conferma ownership/verifica e predisposizione TLS.
-2. Sostituire soltanto il CNAME `www` su THCServers con `rpbasiledev-temporary.onrender.com` (o il target specifico mostrato da Render).
-3. Verificare dal web `https://www.rpbasiledev.com`: HTTPS valido, nessuna pagina Account Suspended, modulo, privacy e navigazione responsive.
-4. Inventariare caselle email esistenti e relativi dati, preparare servizio email indipendente. Migrare MX, SPF, DKIM e DMARC con piano di rollback e test invio/ricezione.
-5. Solo dopo la separazione della posta, puntare l'apex `rpbasiledev.com` a Render seguendo **esattamente** i record supportati e confermati dal servizio.
-6. A cutover verificato, rimuovere `noindex` e `Disallow: /` dal sito e abilitare SEO.
+1. Chiedere conferma se la posta `@rpbasiledev.com` funziona ancora malgrado la sospensione del cPanel.
+2. **Solo se funziona**, trasformare `mail.rpbasiledev.com` da CNAME ad A `131.226.5.6`, e MX @ da `0 rpbasiledev.com` a `0 mail.rpbasiledev.com`; **non** cambiare ancora A @. Testare ricezione/inoltro.
+3. Solo dopo il gate email, richiedere in un **intervento separato** A @ -> `216.24.57.1` (IP pubblicato da Render), attivare il redirect apex -> www e verificare TLS.
+4. Se la posta è già interrotta dalla sospensione, chiedere supporto a mail routing indipendente e **non procedere** con l'A @ finché un MX indipendente è pronto.
+
+Questo ponte DNS separerebbe l'IP di mail da quello del web, **ma lascerebbe le caselle sul vecchio server**. Alternativa più robusta: migrare la posta in ricezione su Cloudflare Email Routing gratuito, con destinazione Gmail verificata e zona DNS completa, oppure su un servizio mailbox indipendente se serve anche SMTP in uscita. Eventuali modifiche nameserver richiedono preflight record-per-record.
+
+### Gate di sicurezza
+
+**NON cambiare A @ né nameserver ora.** Esistono messaggi in Gmail destinati a `admin@rpbasiledev.com`, che è stato usato per servizi di sviluppo: perdere l'email del dominio potrebbe compromettere account esterni. Il record MX attuale dipende da A @. Non si presume che il servizio mail legacy sia funzionante sotto sospensione.
 
 ## Bonifica e sicurezza
 
-- Non trasferire binari o script dal vecchio server sospeso.
-- Conservare ticket, email e prove di incidente; non cancellare o alterare le evidenze.
-- Ruotare tutte le credenziali del vecchio hosting riutilizzate altrove e abilitare MFA sugli account GitHub, Render e registrar.
-- Se THCServers concede export, estrarre soltanto dati legittimi, con scansione e validazione prima di un eventuale recupero.
-- Nuovo sito: HTML/CSS/JS statici, senza WordPress, senza database pubblico, senza librerie esterne; il modulo usa un servizio di inoltro esterno.
-- Non esporre dump CV, dati sanitari, numero telefonico privato, token di servizi o credenziali nel repository pubblico.
+- Hosting nuovo statico HTML/CSS/JS, senza database, WordPress, plugin o runtime PHP.
+- Nessuna migrazione di script, binari o backup del server sospeso.
+- Conservare ticket, log e prove di incidente; ruotare eventuali credenziali riutilizzate e abilitare MFA su GitHub/Render/registrar.
+- Non pubblicare in repository informazioni personali e segreti non necessari.
+- Form di contatto: servizio di inoltro esterno; non è una mailbox `@rpbasiledev.com`.
+
+## Link operativi
+
+- Sito: https://www.rpbasiledev.com/
+- Render: https://dashboard.render.com/static/srv-dc0b32g8v5cc7394tptg
+- Issue di cutover: https://github.com/ruggeropaolobasile/rpbasiledev-temporary/issues/1
 
 ## Rollback
 
-Finché si modifica solo il CNAME `www`, il rollback è la precedente destinazione `rpbasiledev.com`. Evitare di modificare i nameserver globali fino alla chiusura delle verifiche email.
+WWW CNAME precedente: `rpbasiledev.com`. La strategia deve evitare il ritorno al sito sospeso; in caso di regressione preferire la pagina Render fallback. Prima di qualsiasi mutazione di @, salvare i record correnti e predisporre rollback entro il TTL.
